@@ -1,0 +1,54 @@
+{
+    "name": "MoveInputAction",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "8550153e-fd9b-4cb0-81dd-79d41b532119",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "c717a746-9647-423f-9309-2adb9d75a462",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "CameraRotate",
+                    "type": "Value",
+                    "id": "eff503b4-9027-4c68-8eaa-05a841f655f2",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "45f0c169-eef5-4b30-8e8f-b80fce398d14",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cd08c52d-a38f-40b7-81b6-d7ebf7821646",
+                    "path": "<Touchscreen>/primaryTouch/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraRotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
