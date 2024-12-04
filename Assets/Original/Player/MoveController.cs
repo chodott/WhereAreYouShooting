@@ -1,3 +1,4 @@
+using Unity.Notifications.iOS;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -6,34 +7,53 @@ public class MoveController : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    private CharacterController characterController;
+    private CharacterController _characterController;
+    private Animator _animator;
 
-    private Vector3 moveDirection;
-    private Vector2 moveInput;
-    private Vector2 rotateInput;
+    private Vector3 _moveDirection;
+    private Vector2 _moveInput;
+    private Vector2 _rotateInput;
+
+    private float _maxSpeed = 1.0f;
+    private Vector3 _curVelocity;
+    private float _acceleration = 2.0f;
+    private float _deceleration = 1.0f;
+    private Vector2 _lastInput;
 
     private void Awake()
     {
-        characterController = GetComponent<CharacterController>();
-    }
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        _characterController = GetComponent<CharacterController>();
+        _animator = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
     {
-        moveDirection = transform.right * moveInput.x + transform.forward * moveInput.y;
-        moveDirection.Normalize();
-        characterController.Move(moveDirection);
+        // 입력값 가져오기
+        _moveDirection = transform.forward * _moveInput.y + transform.right * _moveInput.x;
 
-        transform.Rotate(Vector3.up, rotateInput.x);
+        // 목표 속도 계산
+        Vector3 targetVelocity = _moveDirection.normalized * _maxSpeed;
+
+        // 현재 속도와 목표 속도 간 가속/감속 처리
+        _curVelocity = Vector3.MoveTowards(
+            _curVelocity,
+            targetVelocity,
+            (targetVelocity.magnitude > _curVelocity.magnitude ? _acceleration : _deceleration) * Time.deltaTime
+        );
+
+        // 이동 처리
+        Vector3 movement = _curVelocity * Time.deltaTime;
+        _characterController.Move(movement);
+
+        Vector3 localVelocity = transform.InverseTransformDirection(_curVelocity); // 월드 속도를 로컬 속도로 변환
+
+        _animator.SetFloat("VelocityX", localVelocity.z);
+        _animator.SetFloat("VelocityZ", localVelocity.x);
+
+        transform.Rotate(transform.up, _rotateInput.x);
+
     }
 
-    public void OnMove(InputValue input) => moveInput = input.Get<Vector2>();
-    public void OnCameraRotate(InputValue input) => rotateInput = input.Get<Vector2>();
+    public void OnMove(InputValue input) =>_moveInput = input.Get<Vector2>();
+    public void OnCameraRotate(InputValue input) => _rotateInput = input.Get<Vector2>();
 }
