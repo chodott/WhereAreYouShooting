@@ -9,6 +9,7 @@ public class MoveController : MonoBehaviour
 
     private CharacterController _characterController;
     private Animator _animator;
+    [SerializeField] private Weapon _equippedWeapon;
 
     private Vector3 _moveDirection;
     private Vector2 _moveInput;
@@ -54,6 +55,21 @@ public class MoveController : MonoBehaviour
 
     }
 
+    private void Attack()
+    {
+        if (_equippedWeapon == null) return;
+
+        Vector3 bulletSpawnPosition = transform.position + transform.forward * 2 + transform.up;
+        _equippedWeapon.Shoot(bulletSpawnPosition, transform.rotation);
+    }
+
+    private void EquipWeapon(Weapon weapon)
+    {
+        
+    }
+
     public void OnMove(InputValue input) =>_moveInput = input.Get<Vector2>();
     public void OnCameraRotate(InputValue input) => _rotateInput = input.Get<Vector2>();
+
+    public void OnAttack(InputValue input) => Attack();
 }
