@@ -31,6 +31,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "TurnShotMode",
+                    "type": "Button",
+                    "id": "d251baed-d21e-4cd8-b169-030a40720fb0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TurnMoveMode",
+                    "type": "Button",
+                    "id": "7373be16-0fff-4700-9098-58999967e197",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -59,11 +77,33 @@
                 {
                     "name": "",
                     "id": "460bb426-6efb-4b83-ad95-28d80482a760",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Joystick>/trigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fd341ac0-1621-4288-8e37-6f821a9e47ee",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TurnShotMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c9b2daa5-2196-44c3-a1cc-979d000e4a45",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TurnMoveMode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

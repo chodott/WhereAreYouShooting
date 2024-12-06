@@ -1,9 +1,10 @@
 using Unity.Notifications.iOS;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class MoveController : MonoBehaviour
+public class MoveController : BaseMode
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -21,13 +22,14 @@ public class MoveController : MonoBehaviour
     private float _deceleration = 1.0f;
     private Vector2 _lastInput;
 
-    private void Awake()
+    protected void Awake()
     {
+        base.Awake();
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
     }
 
-    private void FixedUpdate()
+    protected void FixedUpdate()
     {
         // 입력값 가져오기
         _moveDirection = transform.forward * _moveInput.y + transform.right * _moveInput.x;
@@ -52,7 +54,24 @@ public class MoveController : MonoBehaviour
         _animator.SetFloat("VelocityZ", localVelocity.x);
 
         transform.Rotate(transform.up, _rotateInput.x);
+    }
 
+    protected void OnTriggerEnter(Collider other)
+    {
+        if(other is SphereCollider)
+        {
+            TurnShotMode();
+        }
+    }
+
+    private void TurnShotMode()
+    {
+        _battleSceneUI.TurnShootMode();
+    }
+
+    private void TurnMoveMode()
+    {
+        _battleSceneUI.TurnMoveMode();
     }
 
     private void Attack()
@@ -68,8 +87,12 @@ public class MoveController : MonoBehaviour
         
     }
 
+
     public void OnMove(InputValue input) =>_moveInput = input.Get<Vector2>();
     public void OnCameraRotate(InputValue input) => _rotateInput = input.Get<Vector2>();
 
     public void OnAttack(InputValue input) => Attack();
+
+    public void OnTurnShotMode(InputValue input) => TurnShotMode();
+    public void OnTurnMoveMode(InputValue input) => TurnMoveMode();
 }
