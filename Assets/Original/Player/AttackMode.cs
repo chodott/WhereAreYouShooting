@@ -7,13 +7,18 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 public class AttackMode : IPlayMode
 {
     private Player _player;
+    private LaserManager _laserManager;
     private Quaternion _targetRotation;
     private const float rotateSpeed = 3.0f;
     public void Update()
     {
         _player.transform.rotation = Quaternion.Slerp(_player.transform.rotation, _targetRotation, rotateSpeed * Time.deltaTime);
     }
-    public void Activate(Player player) => _player = player;
+    public void Activate(Player player)
+    {
+        _player = player;
+        _laserManager = player.GetComponent<LaserManager>();
+    }
 
     public void MoveJoystick(Vector2 vector2) 
     {
@@ -26,6 +31,7 @@ public class AttackMode : IPlayMode
     public void Drag(InputValue input) { }
     public void PressButton()
     {
+        _laserManager.enabled = false;
         _player.Attack();
     }
 }

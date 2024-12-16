@@ -11,11 +11,13 @@ public class Player : MonoBehaviour
     private DefenseMode _defenseMode;
     private AttackMode _attackMode;
     private ModeManager _modeManager;
+    private LaserManager _laserManager;
 
     protected void Awake()
     {
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
+        _laserManager = GetComponent<LaserManager>();
 
         _defenseMode = new DefenseMode();
         _attackMode = new AttackMode();
@@ -41,7 +43,6 @@ public class Player : MonoBehaviour
     public void Attack()
     {
         if (_equippedWeapon == null) return;
-
         Vector3 bulletSpawnPosition = transform.position + transform.forward * 2 + transform.up;
         _equippedWeapon.Shoot(bulletSpawnPosition, transform.rotation);
     }
