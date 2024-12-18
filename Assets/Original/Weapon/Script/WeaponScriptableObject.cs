@@ -9,5 +9,5 @@ public class WeaponScriptableObject : ScriptableObject
     public Vector3 spawnRotation;
     public float power;
     public float bulletCount;
-
+    public int type;
 }

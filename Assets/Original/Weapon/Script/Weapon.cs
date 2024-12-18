@@ -1,8 +1,14 @@
 using UnityEngine;
 
+
 public class Weapon : MonoBehaviour
 {
     [SerializeField] private WeaponScriptableObject _weaponScriptableObject;
+    public int WeaponType
+    {
+        get { return _weaponScriptableObject.type; }
+    }
+
     void Start()
     {
         transform.position = _weaponScriptableObject.spawnPosition;

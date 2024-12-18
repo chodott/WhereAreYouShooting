@@ -18,3 +18,4 @@ MonoBehaviour:
   spawnRotation: {x: 0, y: 0, z: 0}
   power: 5
   bulletCount: 10
+  type: 4

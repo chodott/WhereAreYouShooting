@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -49,6 +50,19 @@ public class Player : MonoBehaviour
 
     private void EquipWeapon(Weapon weapon)
     {
+        _equippedWeapon = weapon;
+        _animator.SetInteger("WeaponType", weapon.WeaponType);
+        weapon.transform.SetParent(transform, false);
+    }
 
+    public void Change()
+    {
+        Weapon[] weapons = FindObjectsByType<Weapon>(FindObjectsSortMode.None);
+        int type = _equippedWeapon.WeaponType + 1;
+        type %= 6;
+        foreach (var weapon in weapons)
+        {
+            if(type == weapon.WeaponType) EquipWeapon(weapon);
+        }
     }
 }

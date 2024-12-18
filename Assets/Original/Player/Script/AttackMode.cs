@@ -31,7 +31,12 @@ public class AttackMode : IPlayMode
     public void Drag(InputValue input) { }
     public void PressButton()
     {
-        _laserManager.enabled = false;
+        _player.Change();
         _player.Attack();
+    }
+
+    public void Change()
+    {
+        
     }
 }

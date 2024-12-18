@@ -19,6 +19,9 @@ public class HS_ProjectileMover : MonoBehaviour
     private bool startChecker = false;
     [SerializeField]protected bool notDestroy = false;
 
+    //Custom
+    private int _reflectCount = 3;
+
     protected virtual void Start()
     {
         if (!startChecker)
@@ -74,6 +77,19 @@ public class HS_ProjectileMover : MonoBehaviour
     //https ://docs.unity3d.com/ScriptReference/Rigidbody.OnCollisionEnter.html
     protected virtual void OnCollisionEnter(Collision collision)
     {
+
+        ContactPoint contact = collision.contacts[0];
+        Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
+        Vector3 pos = contact.point + contact.normal * hitOffset;
+
+        if (_reflectCount > 0)
+        {
+            Vector3 reflectDirection = Vector3.Reflect(transform.forward, contact.normal);
+            transform.LookAt(pos + reflectDirection);
+            //transform.position = pos + reflectDirection;
+            return;
+        }
+
         //Lock all axes movement and rotation
         rb.constraints = RigidbodyConstraints.FreezeAll;
         //speed = 0;
@@ -83,9 +99,6 @@ public class HS_ProjectileMover : MonoBehaviour
         projectilePS.Stop();
         projectilePS.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 
-        ContactPoint contact = collision.contacts[0];
-        Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
-        Vector3 pos = contact.point + contact.normal * hitOffset;
 
         //Spawn hit effect on collision
         if (hit != null)
